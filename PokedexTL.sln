@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexTL.API", "PokedexTL.API\PokedexTL.API.csproj", "{2888A32A-C994-4A6D-820A-96B93B748A29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0A23490A-4887-47FF-A21B-7B1F644D41CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{9B21BBDF-770A-4D46-93D9-B0C5818D8669}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexTL.Infrastructure", "PokedexTL.Infrastructure\PokedexTL.Infrastructure.csproj", "{6558E991-848A-4F54-98A5-3251297F5687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexTL.Application", "PokedexTL.Application\PokedexTL.Application.csproj", "{86CD99FA-B33A-4A15-B489-A56476072FF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2888A32A-C994-4A6D-820A-96B93B748A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2888A32A-C994-4A6D-820A-96B93B748A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2888A32A-C994-4A6D-820A-96B93B748A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2888A32A-C994-4A6D-820A-96B93B748A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6558E991-848A-4F54-98A5-3251297F5687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6558E991-848A-4F54-98A5-3251297F5687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6558E991-848A-4F54-98A5-3251297F5687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6558E991-848A-4F54-98A5-3251297F5687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CD99FA-B33A-4A15-B489-A56476072FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CD99FA-B33A-4A15-B489-A56476072FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CD99FA-B33A-4A15-B489-A56476072FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CD99FA-B33A-4A15-B489-A56476072FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2888A32A-C994-4A6D-820A-96B93B748A29} = {0A23490A-4887-47FF-A21B-7B1F644D41CF}
+		{6558E991-848A-4F54-98A5-3251297F5687} = {0A23490A-4887-47FF-A21B-7B1F644D41CF}
+		{86CD99FA-B33A-4A15-B489-A56476072FF2} = {0A23490A-4887-47FF-A21B-7B1F644D41CF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@PoledexTL.API_HostAddress = http://localhost:5273
+
+GET {{PoledexTL.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
