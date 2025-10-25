@@ -22,6 +22,6 @@ public class PokemonNotFoundException : Exception
     public static void ThrowIfNotFound(string pokemonName, HttpStatusCode statusCode)
     {
         if (statusCode == HttpStatusCode.NotFound)
-            throw new PokemonNotFoundException($"No Pokemon found with name {pokemonName}");
+            throw new PokemonNotFoundException($"No Pokemon found with name: {pokemonName}");
     }
 }

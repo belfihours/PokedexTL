@@ -22,6 +22,6 @@ public class SpeciesNotFoundException : Exception
     public static void ThrowIfNotFound(int id, HttpStatusCode statusCode)
     {
         if (statusCode == HttpStatusCode.NotFound)
-            throw new PokemonNotFoundException($"No Pokemon Specie found with id {id}");
+            throw new SpeciesNotFoundException($"No Pokemon Species found with id: {id}");
     }
 }

@@ -6,11 +6,11 @@ public class ApiTranslatorConfiguration : IApiConfigurationBase
     private const string GetYodaDefault = "yoda.json";
     private const string GetShakespeareDefault = "shakespeare.json";
 
-    public string GetPokemonBase()
+    public string GetYoda()
     {
         return this.Uris.GetValueOrDefault("GetYoda") ?? GetYodaDefault;
     }
-    public string GetSpecies()
+    public string GetShakespeare()
     {
         return this.Uris.GetValueOrDefault("GetShakespeare")  ?? GetShakespeareDefault;
     }

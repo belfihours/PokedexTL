@@ -1,0 +1,10 @@
+{
+  "success": {
+    "total": 1
+  },
+  "contents": {
+    "translated": "translated_text",
+    "text": "this is my first time",
+    "translation": "translation_language"
+  }
+}
