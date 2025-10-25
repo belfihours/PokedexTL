@@ -21,7 +21,7 @@ public class PokemonController : Controller
         [FromRoute] string pokemonName,
         CancellationToken cancellationToken)
     {
-       var result = await _pokemonService.GetPokemonAsync(pokemonName);
+        var result = await _pokemonService.GetPokemonAsync(pokemonName);
         return Ok(result);
     }
 }

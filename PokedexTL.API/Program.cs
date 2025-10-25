@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Infinite)
     .CreateLogger();
-
+    
 builder.Host.UseSerilog();
 
 builder.Services.AddScoped<IPokemonService, PokemonService>();

@@ -6,16 +6,42 @@ namespace PokedexTL.Application.Services;
 
 public class PokemonService :  IPokemonService
 {
+    private readonly IExternalPokemonService _externalPokemonService;
+    private readonly ITranslatedPokemonService _translatedPokemonService;
     private readonly ILogger<PokemonService> _logger;
+    private static readonly string InvalidPokemonName = "Invalid pokemon name";    
 
-    public PokemonService(ILogger<PokemonService> logger)
+    public PokemonService(
+        IExternalPokemonService externalPokemonService,
+        ITranslatedPokemonService translatedPokemonService,
+        ILogger<PokemonService> logger)
     {
-        _logger = logger;
+        _externalPokemonService = externalPokemonService ??  throw new ArgumentNullException(nameof(externalPokemonService));
+        _translatedPokemonService = translatedPokemonService ?? throw new ArgumentNullException(nameof(translatedPokemonService));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task<PokemonDto> GetPokemonAsync(string name)
+    public Task<PokemonDto> GetPokemonAsync(string pokemonName)
     {
-        _logger.LogInformation("Get pokemon called");
-        return Task.FromResult(new PokemonDto(name + "ax", "desc", "hab", true));
+        _logger.LogInformation("Requested pokemon with name: {PokemonName}", pokemonName);
+        if(!IsValidPokemonName(pokemonName))
+            throw new ArgumentException(InvalidPokemonName);
+        
+        return _externalPokemonService.GetPokemonAsync(pokemonName);
+    }
+
+    public async Task<PokemonDto> GetTranslatedPokemonAsync(string pokemonName)
+    {
+        _logger.LogInformation("Requested translated pokemon with name: {PokemonName}", pokemonName);
+        if(!IsValidPokemonName(pokemonName))
+            throw new ArgumentException(InvalidPokemonName);
+        
+        var pokemon = await _externalPokemonService.GetPokemonAsync(pokemonName);
+        return await _translatedPokemonService.GetTranslatedPokemonAsync(pokemon);
+    }
+
+    private static bool IsValidPokemonName(string pokemonName)
+    {
+        return !string.IsNullOrWhiteSpace(pokemonName) && pokemonName.All(char.IsLetter);
     }
 }
