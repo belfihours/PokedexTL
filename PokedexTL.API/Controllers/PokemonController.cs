@@ -17,11 +17,22 @@ public class PokemonController : Controller
     // GET
     [HttpGet]
     [Route("{pokemonName}")]
-    public async Task<IActionResult> TestController(
+    public async Task<IActionResult> GetPokemon(
         [FromRoute] string pokemonName,
         CancellationToken cancellationToken)
     {
-        var result = await _pokemonService.GetPokemonAsync(pokemonName);
+        var result = await _pokemonService.GetPokemonAsync(pokemonName, cancellationToken);
+        return Ok(result);
+    }
+    
+    // GET
+    [HttpGet]
+    [Route("translated/{pokemonName}")]
+    public async Task<IActionResult> GetTranslatedPokemon(
+        [FromRoute] string pokemonName,
+        CancellationToken cancellationToken)
+    {
+        var result = await _pokemonService.GetTranslatedPokemonAsync(pokemonName, cancellationToken);
         return Ok(result);
     }
 }

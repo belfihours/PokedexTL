@@ -4,5 +4,5 @@ namespace PokedexTL.Application.Interfaces;
 
 public interface IExternalPokemonService
 {
-    Task<PokemonDto> GetPokemonAsync(string name);
+    Task<PokemonDto> GetPokemonAsync(string pokemonName, CancellationToken cancellationToken);
 }

@@ -17,6 +17,7 @@ public class PokemonServiceTest
     private readonly Fixture _fixture = new();
 
     private const string PokemonNameTest = "Snorlax";
+    private readonly CancellationToken _cancellationToken = CancellationToken.None;
 
     public PokemonServiceTest()
     {
@@ -79,15 +80,15 @@ public class PokemonServiceTest
         // Arrange
         var pokemon = GivenPokemon(PokemonNameTest);
         _externalPokemonServiceMock
-            .Setup(x => x.GetPokemonAsync(PokemonNameTest)).ReturnsAsync(pokemon);
+            .Setup(x => x.GetPokemonAsync(PokemonNameTest, _cancellationToken)).ReturnsAsync(pokemon);
         
         // Act
-        var result = await _sut.GetPokemonAsync(PokemonNameTest);
+        var result = await _sut.GetPokemonAsync(PokemonNameTest, _cancellationToken);
 
         // Assert
         result.Should().Be(pokemon);
-        _externalPokemonServiceMock.Verify(x => x.GetPokemonAsync(PokemonNameTest), Times.Once);
-        _translatedPokemonServiceMock.Verify(x=>x.GetTranslatedPokemonAsync(It.IsAny<PokemonDto>()), Times.Never);
+        _externalPokemonServiceMock.Verify(x => x.GetPokemonAsync(PokemonNameTest, _cancellationToken), Times.Once);
+        _translatedPokemonServiceMock.Verify(x=>x.GetTranslatedPokemonAsync(It.IsAny<PokemonDto>(),_cancellationToken), Times.Never);
     }
 
     [Theory]
@@ -103,7 +104,7 @@ public class PokemonServiceTest
         // Arrange
         
         // Act
-        var action = () => _sut.GetPokemonAsync(wrongName);
+        var action = () => _sut.GetPokemonAsync(wrongName, _cancellationToken);
 
         // Assert
         await action.Should().ThrowAsync <ArgumentException>("Invalid pokemon name");
@@ -115,18 +116,18 @@ public class PokemonServiceTest
         // Arrange
         var pokemon = GivenPokemon(PokemonNameTest);
         _externalPokemonServiceMock
-            .Setup(x => x.GetPokemonAsync(PokemonNameTest)).ReturnsAsync(pokemon);
+            .Setup(x => x.GetPokemonAsync(PokemonNameTest, _cancellationToken)).ReturnsAsync(pokemon);
         var translated = pokemon with { Description = "Translated description" };
         _translatedPokemonServiceMock
-            .Setup(mock => mock.GetTranslatedPokemonAsync(pokemon)).ReturnsAsync(translated);
+            .Setup(mock => mock.GetTranslatedPokemonAsync(pokemon, _cancellationToken)).ReturnsAsync(translated);
         
         // Act
-        var result = await _sut.GetTranslatedPokemonAsync(PokemonNameTest);
+        var result = await _sut.GetTranslatedPokemonAsync(PokemonNameTest, _cancellationToken);
 
         // Assert
         result.Should().Be(translated);
-        _externalPokemonServiceMock.Verify(x => x.GetPokemonAsync(PokemonNameTest), Times.Once);
-        _translatedPokemonServiceMock.Verify(x=>x.GetTranslatedPokemonAsync(pokemon), Times.Once);
+        _externalPokemonServiceMock.Verify(x => x.GetPokemonAsync(PokemonNameTest, _cancellationToken), Times.Once);
+        _translatedPokemonServiceMock.Verify(x=>x.GetTranslatedPokemonAsync(pokemon, _cancellationToken), Times.Once);
     }
     
     [Theory]
@@ -142,7 +143,7 @@ public class PokemonServiceTest
         // Arrange
         
         // Act
-        var action = () => _sut.GetTranslatedPokemonAsync(wrongName);
+        var action = () => _sut.GetTranslatedPokemonAsync(wrongName, _cancellationToken);
 
         // Assert
         await action.Should().ThrowAsync <ArgumentException>("Invalid pokemon name");

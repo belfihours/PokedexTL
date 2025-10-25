@@ -1,5 +1,8 @@
+using PokedexTL.API.Configuration;
 using PokedexTL.Application.Interfaces;
 using PokedexTL.Application.Services;
+using PokedexTL.Infrastructure.Configuration;
+using PokedexTL.Infrastructure.DependencyInjection;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+builder.Services.Configure<ApiPokemonConfiguration>(
+    builder.Configuration.GetSection("ExternalApis:PokeApi"));
+
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Infinite)
     .CreateLogger();
@@ -17,6 +24,8 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 builder.Services.AddScoped<IPokemonService, PokemonService>();
+builder.Services.AddScoped<ITranslatedPokemonService, TranslatedPokemonService>();
+builder.Services.RegisterExternalServices();
 
 var app = builder.Build();
 

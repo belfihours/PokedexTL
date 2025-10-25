@@ -21,23 +21,23 @@ public class PokemonService :  IPokemonService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task<PokemonDto> GetPokemonAsync(string pokemonName)
+    public Task<PokemonDto> GetPokemonAsync(string pokemonName, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Requested pokemon with name: {PokemonName}", pokemonName);
         if(!IsValidPokemonName(pokemonName))
             throw new ArgumentException(InvalidPokemonName);
         
-        return _externalPokemonService.GetPokemonAsync(pokemonName);
+        return _externalPokemonService.GetPokemonAsync(pokemonName, cancellationToken);
     }
 
-    public async Task<PokemonDto> GetTranslatedPokemonAsync(string pokemonName)
+    public async Task<PokemonDto> GetTranslatedPokemonAsync(string pokemonName, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Requested translated pokemon with name: {PokemonName}", pokemonName);
         if(!IsValidPokemonName(pokemonName))
             throw new ArgumentException(InvalidPokemonName);
         
-        var pokemon = await _externalPokemonService.GetPokemonAsync(pokemonName);
-        return await _translatedPokemonService.GetTranslatedPokemonAsync(pokemon);
+        var pokemon = await _externalPokemonService.GetPokemonAsync(pokemonName, cancellationToken);
+        return await _translatedPokemonService.GetTranslatedPokemonAsync(pokemon, cancellationToken);
     }
 
     private static bool IsValidPokemonName(string pokemonName)
