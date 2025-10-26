@@ -13,21 +13,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-
+// Configure logger
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Infinite)
     .CreateLogger();
-    
 builder.Host.UseSerilog();
 
+// Inject services
+builder.Services.AddScoped<IPokemonService, PokemonService>();
+builder.Services.AddScoped<ITranslatedPokemonService, TranslatedPokemonService>();
+
+// Use configuration
 var externalApisConfiguration = builder.Configuration.GetSection(ExternalApisConfiguration.Section);
 builder.Services.Configure<ApiPokemonConfiguration>(
     externalApisConfiguration.GetSection(ApiPokemonConfiguration.Section));
 builder.Services.Configure<ApiTranslatorConfiguration>(
     externalApisConfiguration.GetSection(ApiTranslatorConfiguration.Section));
-
-builder.Services.AddScoped<IPokemonService, PokemonService>();
-builder.Services.AddScoped<ITranslatedPokemonService, TranslatedPokemonService>();
 builder.Services.RegisterExternalServices(externalApisConfiguration);
 
 var app = builder.Build();

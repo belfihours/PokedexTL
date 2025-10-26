@@ -6,4 +6,4 @@ public record PokemonDto(
     string Habitat,
     bool IsLegendary);
 
-// It would be interesting to Add evolution chain, available by https://pokeapi.co/api/v2/evolution-chain
+// ToDecide: It would be interesting to Add evolution chain, available by https://pokeapi.co/api/v2/evolution-chain

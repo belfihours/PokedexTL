@@ -25,7 +25,6 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected exception occurred.");
             await HandleExceptionAsync(httpContext, ex);
         }
     }
@@ -39,14 +38,12 @@ public class ExceptionHandlingMiddleware
             or PokemonNotFoundException 
             or SpeciesNotFoundException)
         {
-            _logger.LogError("Error while attempting retrieving data, user may have inserted wrong input: {Message}"
-                , exception.Message);
+            _logger.LogError(exception, "Error while attempting retrieving data, user may have inserted wrong input.");
             statusCode = HttpStatusCode.BadRequest;
         }
         else
         {
-            _logger.LogError("Error while attempting retrieving data, unhandled exception: {Message}"
-                , exception.Message);
+            _logger.LogError(exception, "Error while attempting retrieving data, unhandled exception.");
             statusCode = HttpStatusCode.InternalServerError;
         }
 

@@ -19,7 +19,9 @@ public class TranslatedPokemonService : ITranslatedPokemonService
     public async Task<PokemonDto> GetTranslatedPokemonAsync(PokemonDto pokemon, CancellationToken cancellationToken)
     {
         var translatedDescription = await GetDescription(pokemon, cancellationToken);
-        
+        _logger.LogInformation("Translation complete. From {oldText} to {newText}"
+            , pokemon.Description
+            , translatedDescription);
         return pokemon with { Description = translatedDescription };
     }
 

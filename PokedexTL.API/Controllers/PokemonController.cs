@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using PokedexTL.Application.Interfaces;
+using PokedexTL.Application.Models;
 using PokedexTL.Application.Services;
 
 namespace PokedexTL.API.Controllers;
@@ -14,9 +16,17 @@ public class PokemonController : Controller
         _pokemonService = pokemonService ?? throw new ArgumentNullException(nameof(pokemonService));
     }
     
-    // GET
+    /// <summary>
+    /// Endpoint to get basic Pokémon information
+    /// </summary>
+    /// <param name="pokemonName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("{pokemonName}")]
+    [ProducesResponseType(typeof(PokemonDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(string), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetPokemon(
         [FromRoute] string pokemonName,
         CancellationToken cancellationToken)
@@ -25,10 +35,18 @@ public class PokemonController : Controller
         return Ok(result);
     }
     
-    // GET
+    /// <summary>
+    /// Endpoint to get basic Pokémon information with translated description in Yoda or Shakespeare language
+    /// </summary>
+    /// <param name="pokemonName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     // ToDecide: maybe add used language to translate in the response
     [HttpGet]
     [Route("translated/{pokemonName}")]
+    [ProducesResponseType(typeof(PokemonDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(string), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetTranslatedPokemon(
         [FromRoute] string pokemonName,
         CancellationToken cancellationToken)

@@ -9,7 +9,7 @@ public class PokemonService :  IPokemonService
     private readonly IExternalPokemonService _externalPokemonService;
     private readonly ITranslatedPokemonService _translatedPokemonService;
     private readonly ILogger<PokemonService> _logger;
-    private static readonly string InvalidPokemonName = "Invalid pokemon name";    
+    private const string InvalidPokemonName = "Invalid pokemon name";
 
     public PokemonService(
         IExternalPokemonService externalPokemonService,
