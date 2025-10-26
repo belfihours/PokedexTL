@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
-using PokedexTL.API.Configuration;
 using PokedexTL.Application.Exceptions;
 using PokedexTL.Application.Interfaces;
 using PokedexTL.Application.Models;
@@ -45,10 +44,18 @@ public class ExternalPokemonService : IExternalPokemonService
         return new PokemonDto
             (
                 externalPokemonDto.Name,
-                externalSpecies!.FlavorTextEntries
-                    .FirstOrDefault(f => f.Language.Name == _configuration.Language)?.Text??DefaultDescription,
+                GetDescription(externalSpecies),
                 externalSpecies.Habitat.Name,
                 externalSpecies.IsLegendary
             );
+    }
+
+    private string GetDescription(ExternalSpecies? externalSpecies)
+    {
+        // To decide whether this Replace has to be kept or leave the original one
+        return externalSpecies!.FlavorTextEntries
+            .FirstOrDefault(f => f.Language.Name == _configuration.Language)?
+            .Text.Replace("\n", " ").Replace("\f", " ").Replace("\r", " ").Replace("\t", " ") 
+               ??DefaultDescription;
     }
 }

@@ -1,4 +1,4 @@
-using PokedexTL.API.Configuration;
+using PokedexTL.API.Middlewares;
 using PokedexTL.Application.Interfaces;
 using PokedexTL.Application.Services;
 using PokedexTL.Infrastructure.Configuration;
@@ -13,9 +13,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.Configure<ApiPokemonConfiguration>(
-    builder.Configuration.GetSection("ExternalApis:PokeApi"));
-
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Infinite)
@@ -23,9 +20,15 @@ Log.Logger = new LoggerConfiguration()
     
 builder.Host.UseSerilog();
 
+var externalApisConfiguration = builder.Configuration.GetSection(ExternalApisConfiguration.Section);
+builder.Services.Configure<ApiPokemonConfiguration>(
+    externalApisConfiguration.GetSection(ApiPokemonConfiguration.Section));
+builder.Services.Configure<ApiTranslatorConfiguration>(
+    externalApisConfiguration.GetSection(ApiTranslatorConfiguration.Section));
+
 builder.Services.AddScoped<IPokemonService, PokemonService>();
 builder.Services.AddScoped<ITranslatedPokemonService, TranslatedPokemonService>();
-builder.Services.RegisterExternalServices();
+builder.Services.RegisterExternalServices(externalApisConfiguration);
 
 var app = builder.Build();
 
@@ -35,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
 

@@ -1,10 +1,10 @@
-﻿using PokedexTL.Infrastructure.Configuration;
+﻿using System.Text.Json.Serialization;
 
-namespace PokedexTL.API.Configuration;
+namespace PokedexTL.Infrastructure.Configuration;
 
 public class ExternalApisConfiguration
 {
     public static readonly string Section =  "ExternalApis";
-    public readonly ApiPokemonConfiguration ApiPokemonConfiguration = new();
-    public readonly ApiTranslatorConfiguration ApiTranslatorConfiguration = new();
+    public ApiPokemonConfiguration PokeApi { get; init; } = new();
+    public ApiTranslatorConfiguration TranslatorApi { get; init; }= new();
 }

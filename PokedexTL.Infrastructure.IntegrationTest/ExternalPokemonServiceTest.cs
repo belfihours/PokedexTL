@@ -115,7 +115,7 @@ public class ExternalPokemonServiceTest
     {
         return new PokemonDto(
             PokemonNameTest,
-            "Very lazy. Just\neats and sleeps.\nAs its rotund\fbulk builds, it\nbecomes steadily\nmore slothful.",
+            "Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes steadily more slothful.",
             "mountain",
             false);
     }

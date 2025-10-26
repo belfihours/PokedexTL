@@ -26,6 +26,7 @@ public class PokemonController : Controller
     }
     
     // GET
+    // ToDecide: maybe add used language to translate in the response
     [HttpGet]
     [Route("translated/{pokemonName}")]
     public async Task<IActionResult> GetTranslatedPokemon(

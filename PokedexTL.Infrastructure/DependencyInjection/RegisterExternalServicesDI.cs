@@ -1,26 +1,28 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PokedexTL.Application.Interfaces;
+using PokedexTL.Infrastructure.Configuration;
 using PokedexTL.Infrastructure.ExternalServices;
 
 namespace PokedexTL.Infrastructure.DependencyInjection;
 
-public static class RegisterExternalServicesDI
+public static class RegisterExternalServicesDi
 {
-    private const string DefaultPokemonApiUrl = "https://pokeapi.co/api/v2/";
-    private const string DefaultTransaltionUrl = "https://api.funtranslations.com/translate/";
-    public static IServiceCollection RegisterExternalServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection RegisterExternalServices(this IServiceCollection serviceCollection,
+        IConfigurationSection configuration)
     {
+        var config = configuration.Get<ExternalApisConfiguration>()!;
         serviceCollection.AddHttpClient<IExternalPokemonService, ExternalPokemonService>(
             options =>
                  {
-                     options.BaseAddress = new Uri(DefaultPokemonApiUrl);
+                     options.BaseAddress = new Uri(config.PokeApi.BaseUrl);
                  }
             );
         
         serviceCollection.AddHttpClient<IExternalTranslationService, ExternalTranslationService>(
             options =>
                 {
-                    options.BaseAddress = new Uri(DefaultTransaltionUrl);
+                    options.BaseAddress = new Uri(config.TranslatorApi.BaseUrl);
                 }
             );
 

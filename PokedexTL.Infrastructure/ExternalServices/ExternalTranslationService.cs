@@ -3,7 +3,6 @@ using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PokedexTL.API.Configuration;
 using PokedexTL.Application.Interfaces;
 using PokedexTL.Infrastructure.Configuration;
 using PokedexTL.Infrastructure.ExternalModels;
